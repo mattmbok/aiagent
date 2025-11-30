@@ -5,7 +5,9 @@ def get_files_info(working_directory, directory="."):
         dir_path = os.path.join(working_directory, directory)
         if not os.path.abspath(dir_path).startswith(os.path.abspath(working_directory)):
             raise PermissionError
-
+        if not os.path.isdir(dir_path):
+            raise FileNotFoundError
+        
         dirlist = os.listdir(dir_path)
         filelist = []
         for entry in dirlist:
