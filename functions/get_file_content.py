@@ -11,7 +11,11 @@ def get_file_content(working_directory, file_path):
         if not os.path.isfile(file_dir_path):
             raise FileNotFoundError
         with open(file_dir_path, "r") as file:
-            file_string = file.read(MAX_CHARS) + f"[...File \"{file_path}\" truncated at 10000 characters]"
+            file_string = file.read(MAX_CHARS)
+            if os.path.getsize(file_dir_path) > MAX_CHARS:
+                file_string += (
+                    f'[...File "{file_path}" truncated at {MAX_CHARS} characters]'
+                )
         return file_string
 
     except PermissionError:
